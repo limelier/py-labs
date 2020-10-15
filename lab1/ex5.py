@@ -1,4 +1,7 @@
-def spiral(matrix: [[chr]]) -> str:
+from typing import List
+
+
+def spiral(matrix: List[List[str]]) -> str:
     size = len(matrix)
     # if size == 0:
     #     result = ''

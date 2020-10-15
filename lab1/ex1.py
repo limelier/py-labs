@@ -1,4 +1,6 @@
 # find the GCD of multiple numbers read from the console
+from typing import List
+
 
 def gcd_pair(a: int, b: int) -> int:
     while b != 0:
@@ -6,7 +8,7 @@ def gcd_pair(a: int, b: int) -> int:
     return a
 
 
-def gcd_list(nums: [int]) -> int:
+def gcd_list(nums: List[int]) -> int:
     gcd = gcd_pair(nums[0], nums[1])
     for num in nums[2:]:
         gcd = gcd_pair(gcd, num)
