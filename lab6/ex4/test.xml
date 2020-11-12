@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="" ?>
+<root>
+<text type="title">
+Hello world
+</text>
+<text type="content" license="MIT">
+    <link where="https://www.google.com">
+        Google
+    </link>
+    <a where="" follow="true">
+        Dead link
+    </a>
+    <link where="" follow="true">
+
+    </link>
+    <link where="" follow="false">
+
+    </link>
+    <link where="">
+
+    </link>
+    <self_closing />
+</text>
+</root>
