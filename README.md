@@ -395,4 +395,73 @@ finally:
 - special class methods:
   - `__init__`
   - `__repr__` and `__str__`, for string conversion
-  -  
+
+## course 11 - threading and synchronization
+
+- two libraries: `_thread` and `threading`
+
+### `_thread`
+
+- `start_new_thread(job, args)`
+- `allocate_lock()`
+  - `acquire()`, blocks until acquisition
+  - `release()`, releases lock
+  - can also use a `with` block instead
+- unhandled exceptions in a secondary thread will not stop the main one
+
+### `threading`
+
+- class `Thread(target, args)`
+  - can be used directly, or derived; if derived one needs to implement:
+    - `run` method - code to be executed when thread starts
+    - `__init__`
+  - `start` method - starts the thread
+  - `join(timeout=-1)` - wait for thread to finish
+  - `getName`/`setName` - change the `name` attribute
+  - `is_alive()`
+
+### `threading` - synchronization
+
+- `Lock` - `acquire(blocking=True, timeout=-1)`, `release()`, and `with`
+- `RLock` - reentrant lock - the same thread can lock multiple times, raising a counter
+- `Condition` - `acquire`, `release`, `wait` (`wait_for`), `notify`, `notify_all`
+- `Semaphore` - `acquire`, `release`, and `with` - provides access to a limited number of threads
+- `Timer(delay, job, args)` - an object derived from `Thread`, runs code after a delay
+- `Event` - `set`, `clear`, `wait` (blocking), `is_set` (non-blocking)
+- `Barrier(parties)` - wait for multiple threads to start at the same time
+  - `wait`, `reset`, `abort`
+  
+## course 12 - c/c++ bindings - struct
+
+
+- allows packing variables into C/C++ structs for calling C/C++ code
+- `pack(fmt, variables)`
+- `unpack(fmt, buffer)`
+- `calcsize(fmt)` - return the size of the byte buffer that would be obtained by using the format
+- ***todo: struct format string cheat sheet?***
+- to align a structure to a specific type add the number `0` followed by the letter at the end of the format string
+- use `=` to disable alignments and padding for any type
+- `s`trings need the number of characters too
+- also pascal style strings for some reason
+
+## course 13 - c/c++ bindings - ctype
+
+- create wrappers over c/c++ types
+- methods for working with pointers and c-strings
+- `c_<type>` for type `<type>`
+  - for example, `c_uint` for `unsigned int`
+- `value` member 
+- beware: normal chars are `byte`s
+- `pointer` function: create a pointer from a ctype object
+  - `ptr_i.contents.value`
+- `byref` function: create a reference - faster, apparently
+  - `ref_i._obj.value` ?
+- c structures: derive `Structure`
+  - `_fields_` - list of `(name, ctype_class)` tuples
+  - for each field, `.offset` and `.size` are also methods
+  - can use `*` operator for a 1d array: `('n', ctypes.c_long * 10)` is equivalent to `long n[10];`
+  - can use `ctyles.POINTER(ctype_class)` to make a pointer for a type
+  - you can also have a member that's another `Structure`
+  - can use a 3-long tuple to specify... bits or something? `('bit_0', ctypes.c_int, 1)`
+- `Union` - same but union
+- there is a `cast(var, type)` function
